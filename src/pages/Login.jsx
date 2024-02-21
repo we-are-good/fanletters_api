@@ -90,13 +90,11 @@ function Login() {
     }
   };
 
-  const getData = async () => {
-    const assessToken = cookies.get(`assessToken`);
-    console.log("assessToken", assessToken);
-    const response = await axios.get(`${BASE_URL}/letters`, {});
-    console.log("response", response);
-    setData(response.data.data);
-  };
+  // const getData = async () => {
+  //   const assessToken = cookies.get(`assessToken`);
+  //   const response = await axios.get(`${BASE_URL}/letters`, {});
+  //   setData(response.data.data);
+  // };
 
   return (
     <>

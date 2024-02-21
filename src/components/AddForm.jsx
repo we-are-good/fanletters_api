@@ -13,14 +13,13 @@ function AddForm() {
   const [member, setMember] = useState("Ava Max");
 
   const getLoginUser = useSelector((state) => state.getLoginUser);
-  setNickname(getLoginUser.nickname);
 
   const onAddevent = (event) => {
     event.preventDefault();
     if (!content) {
       return alert("내용은 필수입니다.");
     }
-
+    setNickname(getLoginUser.nickname);
     const nextLetter = {
       id: uuid(),
       nickname,
@@ -29,10 +28,7 @@ function AddForm() {
       writedTo: member,
       createdAt: new Date(),
     };
-
     dispatch(createLetterThunk(nextLetter));
-    setNickname("");
-    setContent("");
   };
 
   return (
