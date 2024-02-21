@@ -17,16 +17,22 @@ import { getFormattedDate } from "../util/date";
 import Button from "../util/Button";
 import letterimage from "../assets/letterimage.png";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteLetter, editLetter } from "../redux/modules/letters";
+import {
+  changeContentThunk,
+  deleteLetter,
+  deleteLetterThunk,
+  editLetter,
+} from "../redux/modules/letters";
 
 function Detail() {
   const dispatch = useDispatch();
+  const navigation = useNavigate();
+  const { id } = useParams();
+
   const letters = useSelector((state) => state.letters);
 
   const [isEdition, setIsEdition] = useState(false);
   const [editingText, setEditingText] = useState("");
-  const navigation = useNavigate();
-  const { id } = useParams();
 
   const { avatar, nickname, createdAt, writedTo, content } = letters.find(
     (letter) => letter.id === id
@@ -36,15 +42,15 @@ function Detail() {
     const answer = window.confirm("정말로 삭제하시겠습니까?");
     if (!answer) return;
 
-    dispatch(deleteLetter(id));
+    dispatch(deleteLetterThunk(id));
 
-    navigation("/");
+    navigation("/home");
   };
 
   const onEditDone = () => {
     if (!editingText) return alert("수정사항이 없습니다.");
 
-    dispatch(editLetter(id, editingText));
+    dispatch(changeContentThunk({ id, editingText })); //배열으로 들어갔음을 기억하자
     setIsEdition(false);
     setEditingText("");
   };

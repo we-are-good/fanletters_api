@@ -1,21 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, InputWrapper, SelectWrapper } from "../styles/AddFormStyle";
 import { v4 as uuid } from "uuid";
 import Button from "../util/Button";
-import { useDispatch } from "react-redux";
-import { addLetter } from "../redux/modules/letters";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addLetter,
+  createLetterThunk,
+  createLettersThunk,
+} from "../redux/modules/letters";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Cookies } from "react-cookie";
 
 function AddForm() {
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
   const [member, setMember] = useState("Ava Max");
+  const navigation = useNavigate();
+  const BASE_URL = `https://moneyfulpublicpolicy.co.kr`;
+
+  useEffect(() => {
+    const getNickname = async () => {
+      const response = await axios.get(`${BASE_URL}/user`, {
+        headers: {
+          Authorization: "Bearer AccessToken",
+        },
+      });
+      console.log("responseNickname", response);
+    };
+  }, [BASE_URL]);
 
   const onAddevent = (event) => {
     event.preventDefault();
-    if (!nickname || !content) return alert("닉네임과 내용은 필수입니다.");
+    if (!content) {
+      return alert("내용은 필수입니다.");
+    }
 
-    const newLetter = {
+    const nextLetter = {
       id: uuid(),
       nickname,
       content,
@@ -24,7 +46,7 @@ function AddForm() {
       createdAt: new Date(),
     };
 
-    dispatch(addLetter(newLetter));
+    dispatch(createLetterThunk(nextLetter));
     setNickname("");
     setContent("");
   };
@@ -32,13 +54,7 @@ function AddForm() {
   return (
     <Form onSubmit={onAddevent}>
       <InputWrapper>
-        <label>닉네임:</label>
-        <input
-          onChange={(event) => setNickname(event.target.value)}
-          value={nickname}
-          placeholder="최대 20글자까지 작성할 수 있습니다."
-          maxLength={20}
-        />
+        <label>닉네임:{nickname}</label>
       </InputWrapper>
       <InputWrapper>
         <label>내용:</label>

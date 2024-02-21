@@ -1,39 +1,77 @@
 import fakeData from "../../fakeData.json";
-
-const ADD_LETTER = "letters/ADD_LETTER";
-const DELETE_LETTER = "letters/DELETE_LETTER";
-const EDIT_LETTER = "letters/EDIT_LETTER";
-
-export const addLetter = (payload) => {
-  return { type: ADD_LETTER, payload };
-};
-export const deleteLetter = (payload) => {
-  return { type: DELETE_LETTER, payload };
-};
-export const editLetter = (payload) => {
-  return { type: EDIT_LETTER, payload };
-};
+import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  changeContentLetter,
+  createLetter,
+  deleteLetter,
+  getLetters,
+} from "./letters-api";
 const initialState = fakeData;
 
-const letters = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_LETTER:
-      const newLetter = action.payload;
-      return [newLetter, ...state];
-    case DELETE_LETTER:
-      const letterId = action.payload;
-      return state.filter((letter) => letter.id !== letterId);
-    case EDIT_LETTER:
-      const { id, editingText } = action.payload;
-      return state.map((letter) => {
-        if (letter.id === id) {
-          return { ...letter, content: editingText };
-        }
-        return letter;
-      });
-    default:
-      return state;
-  }
-};
+export const getLettersThunk = createAsyncThunk(
+  "letter/getLetters",
+  getLetters
+);
+export const createLetterThunk = createAsyncThunk(
+  "letter/createLetter",
+  createLetter
+);
+export const deleteLetterThunk = createAsyncThunk(
+  "letter/deleteLetter",
+  deleteLetter
+);
 
-export default letters;
+export const changeContentThunk = createAsyncThunk(
+  "letter/changeContentLetter",
+  async (id, editingText, { getState }) => {
+    const state = getState();
+    const { todos } = state.letters;
+
+    await changeContentLetter(id, {
+      content: editingText,
+    });
+    return id; //다시
+  }
+);
+
+const letterSlice = createSlice({
+  name: "letters",
+  initialState,
+  // reducers: {
+  //   addLetter: (state, action) => {
+  //     state.push(action.payload);
+  //   },
+  //   deleteLetter: (state, action) => {
+  //     const letterId = action.payload;
+  //     return state.filter((letter) => letter.id !== letterId);
+  //   },
+  //   editLetter: (state, action) => {
+  //     const { id, editingText } = action.payload;
+  //     return state.map((letter) => {
+  //       if (letter.id === id) {
+  //         return { ...letter, content: editingText };
+  //       }
+  //       return letter;
+  //     });
+  //   },
+  // },
+  extraReducers: (builder) => {
+    builder.addCase(getLettersThunk.fulfilled, (state, action) => {
+      state.letters = action.payload;
+    });
+    builder.addCase(createLetterThunk.fulfilled, (state, action) => {
+      state.letters.push(action.payload);
+    });
+    builder.addCase(deleteLetterThunk.fulfilled, (state, action) => {
+      const targetIndex = state.todos.findIndex(
+        (todo) => todo.id === action.payload
+      );
+      state.todos.splice(targetIndex, 1);
+    });
+  },
+});
+
+// export const { addLetter, deleteLetter, editLetter } = letterSlice.actions;
+
+export default letterSlice.reducer;
