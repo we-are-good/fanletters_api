@@ -12,7 +12,7 @@ function Router() {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/profile/:userID" element={<Profile />} />
+        <Route path="/profile/:userId" element={<Profile />} />
         <Route path="*" element={<Navigate replace to="/" />} />
         {/* 뒤로가기를 적용하기 위해 replace 입력, Home은 안되는지 확인 */}
       </Routes>

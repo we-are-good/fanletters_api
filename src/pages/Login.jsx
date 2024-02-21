@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BigButton,
@@ -27,6 +27,20 @@ function Login() {
 
   const cookies = new Cookies();
 
+  useEffect(() => {
+    const getLoginUser = async () => {
+      const accessToken = cookies.get("accessToken");
+      const response = await axios.get(`${BASE_URL}/user`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      dispatch(getLoginUser(response));
+    };
+    getLoginUser();
+  }, []);
+
   const handleSignup = async () => {
     try {
       if (!id || !password || !nickname) {
@@ -46,8 +60,9 @@ function Login() {
         setStatus("인증완료");
       }
       navigation(`/home`);
-    } catch {
-      alert("오류가 발생했습니다.");
+    } catch (error) {
+      console.log("error", error);
+      alert("오류가 발생했습니다.", error.response.data);
       navigation(`/`);
     }
   };
@@ -68,8 +83,9 @@ function Login() {
         setStatus("인증완료");
       }
       navigation(`/home`);
-    } catch {
-      alert("오류가 발생했습니다.");
+    } catch (error) {
+      console.log("error", error);
+      alert("오류가 발생했습니다.", error.response.data);
       navigation(`/`);
     }
   };

@@ -26,7 +26,8 @@ export const changeContentThunk = createAsyncThunk(
   "letter/changeContentLetter",
   async (id, editingText, { getState }) => {
     const state = getState();
-    const { todos } = state.letters;
+    console.log(state);
+    // const { todos } = state.letters;
 
     await changeContentLetter(id, {
       content: editingText,
@@ -38,7 +39,7 @@ export const changeContentThunk = createAsyncThunk(
 const letterSlice = createSlice({
   name: "letters",
   initialState,
-  // reducers: {
+  reducers: {},
   //   addLetter: (state, action) => {
   //     state.push(action.payload);
   //   },
@@ -64,10 +65,10 @@ const letterSlice = createSlice({
       state.letters.push(action.payload);
     });
     builder.addCase(deleteLetterThunk.fulfilled, (state, action) => {
-      const targetIndex = state.todos.findIndex(
+      const targetIndex = state.letters.findIndex(
         (todo) => todo.id === action.payload
       );
-      state.todos.splice(targetIndex, 1);
+      state.letters.splice(targetIndex, 1);
     });
   },
 });

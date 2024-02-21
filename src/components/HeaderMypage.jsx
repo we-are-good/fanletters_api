@@ -1,27 +1,17 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HeaderTop, TopButton } from "../styles/HeaderMypageStyle";
-import { Cookies } from "react-cookie";
-import axios from "axios";
 
 function HeaderMypage() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
-  const BASE_URL = `https://moneyfulpublicpolicy.co.kr`;
 
-  const goToMypage = () => {
-    return navigation(`/profile`);
-  };
-
-  const cookies = new Cookies();
+  const getLoginUser = useSelector((state) => state.getLoginUser);
+  const id = getLoginUser.id;
 
   const logOut = async () => {
-    //   const assessToken = cookies.delete(`assessToken`);
-    //   console.log("assessToken", assessToken);
-    //   const response = await axios.get(`${BASE_URL}/letters`, {});
-    //   console.log("response", response);
-    //   setData(response.data.data);
+    await dispatch(getLoginUser(""));
     navigation("/");
   };
 
@@ -36,7 +26,7 @@ function HeaderMypage() {
       </TopButton>
       <TopButton
         onClick={() => {
-          navigation("/profile");
+          navigation(`/profile/${id}`);
         }}
       >
         마이페이지

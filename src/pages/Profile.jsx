@@ -1,20 +1,22 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import LetterCard from "../components/LetterCard";
+import { LetterWrapper } from "../styles/LetterCardStyle";
 import {
   AbataWrapper,
   MypageBanner,
   MypageContainer,
   UserInformationWrapper,
 } from "../styles/ProfileStyle";
-import { LetterWrapper } from "../styles/LetterCardStyle";
-import { useSelector } from "react-redux";
-import LetterCard from "../components/LetterCard";
 
 function Profile() {
-  const loginUser = useSelector((state) => state.auth);
   const letters = useSelector((state) => state.letters);
+  const getLoginUser = useSelector((state) => state.getLoginUser);
+
+  const { nickname } = getLoginUser;
 
   const filteredLetters = letters.filter(
-    (letter) => letter.nickname === loginUser.nickname
+    (letter) => letter.nickname === nickname
   );
   return (
     <>
@@ -24,8 +26,8 @@ function Profile() {
             <img src="null" alt="아바타" />
           </AbataWrapper>
           <UserInformationWrapper>
-            <div> {loginUser.userId} </div>
-            <div> {loginUser.nickname} </div>
+            <div> {getLoginUser.userId} </div>
+            <div> {getLoginUser.nickname} </div>
           </UserInformationWrapper>
         </MypageBanner>
         <LetterWrapper>

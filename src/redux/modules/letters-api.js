@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const lettersClient = axios.create({
-  baseURL: "http://localhost:5001/fanLetters_api",
+  baseURL: "http://localhost:3000/fanLetters_api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -18,7 +18,7 @@ export const getSingleLetter = async (id) => {
 };
 
 export const createLetter = async (letter) => {
-  await lettersClient.post("/", letter);
+  await lettersClient.post(`/home`, letter);
   return letter;
 };
 

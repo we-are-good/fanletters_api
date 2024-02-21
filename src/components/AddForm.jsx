@@ -1,35 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Form, InputWrapper, SelectWrapper } from "../styles/AddFormStyle";
-import { v4 as uuid } from "uuid";
-import Button from "../util/Button";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addLetter,
-  createLetterThunk,
-  createLettersThunk,
-} from "../redux/modules/letters";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { Cookies } from "react-cookie";
+import { v4 as uuid } from "uuid";
+import { createLetterThunk } from "../redux/modules/letters";
+import { Form, InputWrapper, SelectWrapper } from "../styles/AddFormStyle";
+import Button from "../util/Button";
 
 function AddForm() {
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState("");
+  const [avatar, setAvatar] = useState("");
   const [content, setContent] = useState("");
   const [member, setMember] = useState("Ava Max");
-  const navigation = useNavigate();
-  const BASE_URL = `https://moneyfulpublicpolicy.co.kr`;
 
-  useEffect(() => {
-    const getNickname = async () => {
-      const response = await axios.get(`${BASE_URL}/user`, {
-        headers: {
-          Authorization: "Bearer AccessToken",
-        },
-      });
-      console.log("responseNickname", response);
-    };
-  }, [BASE_URL]);
+  const getLoginUser = useSelector((state) => state.getLoginUser);
+  setNickname(getLoginUser.nickname);
 
   const onAddevent = (event) => {
     event.preventDefault();
