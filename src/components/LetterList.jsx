@@ -8,8 +8,9 @@ function LetterList() {
   const letters = useSelector((state) => state.letters);
 
   const filteredLetters = letters.filter(
-    (letter) => letter.letterData.writedTo === activeMember
+    (letter) => letter.writedTo === activeMember
   );
+
   return (
     <ListWrapper>
       {filteredLetters.length === 0 ? (

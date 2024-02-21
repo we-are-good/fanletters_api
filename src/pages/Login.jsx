@@ -30,6 +30,9 @@ function Login() {
   useEffect(() => {
     const getLoginUser = async () => {
       const accessToken = cookies.get("accessToken");
+      if (!accessToken) {
+        return;
+      }
       const response = await axios.get(`${BASE_URL}/user`, {
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +43,7 @@ function Login() {
       dispatch(getLoginUser(response));
     };
     getLoginUser();
-  }, []);
+  });
 
   const handleSignup = async () => {
     try {
