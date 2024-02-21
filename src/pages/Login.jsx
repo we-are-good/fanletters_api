@@ -36,6 +36,7 @@ function Login() {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      console.log(response);
       dispatch(getLoginUser(response));
     };
     getLoginUser();

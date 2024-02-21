@@ -38,10 +38,13 @@ export const changeContentThunk = createAsyncThunk(
 
 const letterSlice = createSlice({
   name: "letters",
-  initialState,
+  initialState: {
+    letterData: [...fakeData],
+  },
   reducers: {},
+  // setLetters: (state, action) => {state.letterData = action.payload;}
   //   addLetter: (state, action) => {
-  //     state.push(action.payload);
+  //     state.letterData.unshift(action.payload);
   //   },
   //   deleteLetter: (state, action) => {
   //     const letterId = action.payload;
@@ -49,13 +52,10 @@ const letterSlice = createSlice({
   //   },
   //   editLetter: (state, action) => {
   //     const { id, editingText } = action.payload;
-  //     return state.map((letter) => {
-  //       if (letter.id === id) {
-  //         return { ...letter, content: editingText };
-  //       }
-  //       return letter;
-  //     });
+  //    const targetLetter = state.letterData.find((letter) => lettter.id === id)
+  // targetLetter.comtent = editingText
   //   },
+
   // },
   extraReducers: (builder) => {
     builder.addCase(getLettersThunk.fulfilled, (state, action) => {
@@ -73,6 +73,6 @@ const letterSlice = createSlice({
   },
 });
 
-// export const { addLetter, deleteLetter, editLetter } = letterSlice.actions;
+// export const { setLetter, addLetter, deleteLetter, editLetter } = letterSlice.actions;
 
 export default letterSlice.reducer;
