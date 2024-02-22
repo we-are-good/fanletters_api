@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Cookies } from "react-cookie";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { login } from "../redux/modules/authSlice";
+import { authApi } from "../redux/modules/index-api";
+import { Container } from "../styles/DetailStyle";
 import {
   BigButton,
   ButtonsWrapper,
@@ -8,11 +14,6 @@ import {
   LoginWrapper,
   SmallButton,
 } from "../styles/LoginStyle";
-import { useDispatch } from "react-redux";
-import { Container } from "../styles/DetailStyle";
-import { Cookies } from "react-cookie";
-import axios from "axios";
-import { toast } from "react-toastify";
 
 function Login() {
   const navigation = useNavigate();
@@ -24,7 +25,6 @@ function Login() {
 
   const [status, setStatus] = useState("아직 인증 안됨");
   const [data, setData] = useState([]);
-  const BASE_URL = `https://moneyfulpublicpolicy.co.kr`;
 
   const cookies = new Cookies();
 
@@ -34,7 +34,7 @@ function Login() {
       if (!accessToken) {
         return;
       }
-      const response = await axios.get(`${BASE_URL}/user`, {
+      const response = await authApi.get(`/user`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -52,23 +52,23 @@ function Login() {
         return alert("빈칸을 모두 입력해주세요");
       }
 
-      const response = await axios.post(`${BASE_URL}/register`, {
+      const { data } = await authApi.post(`/register`, {
         id,
         password,
         nickname,
       });
+      if (data.success) {
+        dispatch(login());
+        toast.success("회원가입 성공");
+      }
+
       setId("");
       setPassword("");
       setNickname("");
-      console.log("response", response);
-      if (response.status === 200) {
-        setStatus("인증완료");
-        toast.success("회원가입 성공");
-      }
       navigation(`/`);
     } catch (error) {
       console.log("error", error);
-      alert("오류가 발생했습니다.", error.response.data);
+      toast.error(error.response.data.message);
       navigation(`/login`);
     }
   };
@@ -78,21 +78,20 @@ function Login() {
       if (!id || !password) {
         return alert("빈칸을 모두 입력해주세요");
       }
-      const response = await axios.post(`${BASE_URL}/login`, {
+      const { data } = await authApi.post(`/login`, {
         id,
         password,
       });
       setId("");
       setPassword("");
-      console.log("response", response);
-      if (response.status === 200) {
-        setStatus("인증완료");
+      console.log("data", data);
+      if (data.success) {
         toast.success("로그인 성공!");
       }
       navigation(`/`);
     } catch (error) {
       console.log("error", error);
-      alert("오류가 발생했습니다.", error.response.data);
+      toast.error(error.response.data.message);
       navigation(`/login`);
     }
   };
