@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import reportWebVitals from "./reportWebVitals";
-import GlobalStyle from "./styles/GlobalStyle";
-import Router from "./router/Router";
 import { Provider } from "react-redux";
-import store from "./redux/config/consfigStore";
+import { ToastContainer } from "react-toastify/dist/components";
 import Login from "./pages/Login";
+import store from "./redux/config/consfigStore";
+import reportWebVitals from "./reportWebVitals";
+import Router from "./router/Router";
+import GlobalStyle from "./styles/GlobalStyle";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,6 +15,7 @@ root.render(
       <Router>
         <Login />
         <GlobalStyle />
+        <ToastContainer />
       </Router>
     </Provider>
   </React.StrictMode>

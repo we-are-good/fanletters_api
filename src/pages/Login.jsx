@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { Container } from "../styles/DetailStyle";
 import { Cookies } from "react-cookie";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function Login() {
   const navigation = useNavigate();
@@ -62,6 +63,7 @@ function Login() {
       console.log("response", response);
       if (response.status === 200) {
         setStatus("인증완료");
+        toast.success("회원가입 성공");
       }
       navigation(`/`);
     } catch (error) {
@@ -85,6 +87,7 @@ function Login() {
       console.log("response", response);
       if (response.status === 200) {
         setStatus("인증완료");
+        toast.success("로그인 성공!");
       }
       navigation(`/`);
     } catch (error) {
