@@ -22,4 +22,7 @@ export const TopButton = styled.button`
   padding: 10px;
   font-weight: 700;
   border-radius: 20px;
+  & :hover {
+    background-color: #7eadff;
+  }
 `;

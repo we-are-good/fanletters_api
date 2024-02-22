@@ -9,7 +9,6 @@ function Home() {
   return (
     <div>
       <Container>
-        <HeaderMypage />
         <Header />
         <AddForm />
         <LetterList />
