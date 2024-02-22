@@ -6,11 +6,11 @@ const getLoginUserSlice = createSlice({
   initialState,
   reducers: {
     setLoginUser: (state, action) => {
-      const loginUser = action.payload;
-      return loginUser;
+      const getLoginUser = action.payload;
+      return getLoginUser;
     },
   },
 });
 
-export const { loginUser } = getLoginUserSlice.actions;
+export const { getLoginUser } = getLoginUserSlice.actions;
 export default getLoginUserSlice.reducer;

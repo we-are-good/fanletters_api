@@ -12,14 +12,14 @@ function HeaderMypage() {
 
   const logOut = async () => {
     await dispatch(getLoginUser(""));
-    navigation("/");
+    navigation("/login");
   };
 
   return (
     <HeaderTop>
       <TopButton
         onClick={() => {
-          navigation("/home");
+          navigation("/");
         }}
       >
         Home

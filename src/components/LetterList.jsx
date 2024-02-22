@@ -7,7 +7,7 @@ function LetterList() {
   const activeMember = useSelector((state) => state.member);
   const letters = useSelector((state) => state.letters);
 
-  const filteredLetters = letters.filter(
+  const filteredLetters = letters.letters.filter(
     (letter) => letter.writedTo === activeMember
   );
 

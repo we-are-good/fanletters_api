@@ -1,7 +1,7 @@
 import React from "react";
 import { Tab, TabsWrapepr } from "../styles/TabStyle";
 import { useSelector, useDispatch } from "react-redux";
-import { setMember } from "../redux/modules/member";
+import { setMember } from "../redux/modules/memberSlice";
 
 function Tabs() {
   const activeMember = useSelector((state) => state.member);

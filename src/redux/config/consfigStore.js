@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import letterReducer from "../modules/letters";
-import memberReducer from "../modules/member";
-import getLoginUserReducer from "../modules/loginuser";
+import letters from "../modules/letterSlice";
+import member from "../modules/memberSlice";
+import getLoginUser from "../modules/getLoginUserSlice";
+import auth from "../modules/authSlice";
 
 const store = configureStore({
   reducer: {
-    letters: letterReducer,
-    member: memberReducer,
-    getLoginUser: getLoginUserReducer,
+    letters,
+    member,
+    getLoginUser,
+    auth,
   },
 });
 export default store;

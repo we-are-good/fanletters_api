@@ -63,11 +63,11 @@ function Login() {
       if (response.status === 200) {
         setStatus("인증완료");
       }
-      navigation(`/home`);
+      navigation(`/`);
     } catch (error) {
       console.log("error", error);
       alert("오류가 발생했습니다.", error.response.data);
-      navigation(`/`);
+      navigation(`/login`);
     }
   };
 
@@ -86,11 +86,11 @@ function Login() {
       if (response.status === 200) {
         setStatus("인증완료");
       }
-      navigation(`/home`);
+      navigation(`/`);
     } catch (error) {
       console.log("error", error);
       alert("오류가 발생했습니다.", error.response.data);
-      navigation(`/`);
+      navigation(`/login`);
     }
   };
 

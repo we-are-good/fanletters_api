@@ -22,7 +22,7 @@ import {
   deleteLetter,
   deleteLetterThunk,
   editLetter,
-} from "../redux/modules/letters";
+} from "../redux/modules/letterSlice";
 
 function Detail() {
   const dispatch = useDispatch();
@@ -34,9 +34,8 @@ function Detail() {
   const [isEdition, setIsEdition] = useState(false);
   const [editingText, setEditingText] = useState("");
 
-  const { avatar, nickname, createdAt, writedTo, content } = letters.find(
-    (letter) => letter.id === id
-  );
+  const { avatar, nickname, createdAt, writedTo, content } =
+    letters.letters.find((letter) => letter.id === id);
 
   const onDeleteBtn = () => {
     const answer = window.confirm("정말로 삭제하시겠습니까?");

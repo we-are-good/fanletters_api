@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
-import { createLetterThunk } from "../redux/modules/letters";
+import { createLetterThunk } from "../redux/modules/letterSlice";
 import { Form, InputWrapper, SelectWrapper } from "../styles/AddFormStyle";
 import Button from "../util/Button";
 
@@ -26,7 +26,7 @@ function AddForm() {
       content,
       avatar: null,
       writedTo: member,
-      createdAt: new Date(),
+      createdAt: new Date().toString, //직렬화가 되지 않았다는 오류가 뜨면 문자열로 바꿔준다.
     };
     dispatch(createLetterThunk(nextLetter));
   };

@@ -37,10 +37,8 @@ export const changeContentThunk = createAsyncThunk(
 );
 
 const letterSlice = createSlice({
-  name: "letters",
-  initialState: {
-    letterData: [...fakeData],
-  },
+  name: "letters", //action.type의 prefix
+  initialState: fakeData,
   reducers: {},
   // setLetters: (state, action) => {state.letterData = action.payload;}
   //   addLetter: (state, action) => {
@@ -52,8 +50,8 @@ const letterSlice = createSlice({
   //   },
   //   editLetter: (state, action) => {
   //     const { id, editingText } = action.payload;
-  //    const targetLetter = state.letterData.find((letter) => lettter.id === id)
-  // targetLetter.comtent = editingText
+  //    const targetLetter = state.letterData.find((letter) => letter.id === id)
+  // targetLetter.content = editingText
   //   },
 
   // },
@@ -73,6 +71,6 @@ const letterSlice = createSlice({
   },
 });
 
-// export const { setLetter, addLetter, deleteLetter, editLetter } = letterSlice.actions;
+// export const { addLetter, deleteLetter, editLetter } = letterSlice.actions;
 
 export default letterSlice.reducer;

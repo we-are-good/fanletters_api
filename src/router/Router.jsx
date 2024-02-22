@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Detail from "../pages/Detail";
 import Home from "../pages/Home";
-import Profile from "../pages/Profile";
 import Login from "../pages/Login";
+import Profile from "../pages/Profile";
 
 function Router() {
-  const [isLogin, setIsLogin] = useState(false);
+  const isLogin = useSelector((state) => state.auth.isLogin);
   return (
     <BrowserRouter>
       <Routes>

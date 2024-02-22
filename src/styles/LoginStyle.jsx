@@ -54,4 +54,9 @@ export const SmallButton = styled.button`
   width: 500px;
   height: 30px;
   border-radius: 20px;
+  user-select: none;
+  cursor: pointer;
+  &:hover {
+    color: black;
+  }
 `;

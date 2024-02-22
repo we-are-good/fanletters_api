@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = "Ava Max";
 
 const memberSlice = createSlice({
-  name: "member",
+  name: "member", //액션 type의 slice와 같다.
   initialState,
   reducers: {
     setMember: (state, action) => {
@@ -12,5 +12,5 @@ const memberSlice = createSlice({
   },
 });
 
-export const { setMember } = memberSlice.actions;
+export const { setMember } = memberSlice.actions; //액션크리에이터
 export default memberSlice.reducer;
