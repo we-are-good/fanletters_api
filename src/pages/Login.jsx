@@ -26,25 +26,23 @@ function Login() {
   const [status, setStatus] = useState("아직 인증 안됨");
   const [data, setData] = useState([]);
 
-  const cookies = new Cookies();
-
-  useEffect(() => {
-    const getLoginUser = async () => {
-      const accessToken = cookies.get("accessToken");
-      if (!accessToken) {
-        return;
-      }
-      const response = await authApi.get(`/user`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log(response);
-      dispatch(getLoginUser(response));
-    };
-    getLoginUser();
-  });
+  // useEffect(() => {
+  //   const getLoginUser = async () => {
+  //     const accessToken = cookies.get("accessToken");
+  //     if (!accessToken) {
+  //       return;
+  //     }
+  //     const response = await authApi.get(`/user`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     });
+  //     console.log(response);
+  //     dispatch(getLoginUser(response));
+  //   };
+  //   getLoginUser();
+  // });
 
   const handleSignup = async () => {
     try {
@@ -57,8 +55,10 @@ function Login() {
         password,
         nickname,
       });
+      const { accessToken, avatar, nickname, userId } = data;
+
       if (data.success) {
-        dispatch(login());
+        dispatch(login({ accessToken, avatar, nickname, userId }));
         toast.success("회원가입 성공");
       }
 
@@ -82,15 +82,15 @@ function Login() {
         id,
         password,
       });
+      const { accessToken, avatar, nickname, userId } = data;
       setId("");
       setPassword("");
-      console.log("data", data);
       if (data.success) {
+        dispatch(login({ accessToken, avatar, nickname, userId }));
         toast.success("로그인 성공!");
       }
       navigation(`/`);
     } catch (error) {
-      console.log("error", error);
       toast.error(error.response.data.message);
       navigation(`/login`);
     }

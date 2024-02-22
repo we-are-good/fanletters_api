@@ -7,24 +7,21 @@ import Button from "../util/Button";
 
 function AddForm() {
   const dispatch = useDispatch();
-  const [nickname, setNickname] = useState("");
-  const [avatar, setAvatar] = useState("");
   const [content, setContent] = useState("");
   const [member, setMember] = useState("Ava Max");
-
-  const getLoginUser = useSelector((state) => state.getLoginUser);
+  const { avatar, nickname } = useSelector((state) => state.auth);
 
   const onAddevent = (event) => {
     event.preventDefault();
     if (!content) {
       return alert("내용은 필수입니다.");
     }
-    setNickname(getLoginUser.nickname);
+
     const nextLetter = {
       id: uuid(),
       nickname,
       content,
-      avatar: null,
+      avatar,
       writedTo: member,
       createdAt: new Date().toString, //직렬화가 되지 않았다는 오류가 뜨면 문자열로 바꿔준다.
     };
