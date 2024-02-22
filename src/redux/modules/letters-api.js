@@ -1,13 +1,13 @@
 import axios from "axios";
 
 export const lettersClient = axios.create({
-  baseURL: "http://localhost:3000/fanLetters_api",
+  baseURL: "http://localhost:5000/letters",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-export const getLetters = async () => {
+export const addLetters = async () => {
   const response = await lettersClient.get(`/home`);
   return response.data;
 };

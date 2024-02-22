@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
-import { createLetterThunk } from "../redux/modules/letterSlice";
+import { __addLetter } from "../redux/modules/letterSlice";
 import { Form, InputWrapper, SelectWrapper } from "../styles/AddFormStyle";
 import Button from "../util/Button";
 
@@ -9,7 +9,7 @@ function AddForm() {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [member, setMember] = useState("Ava Max");
-  const { avatar, nickname } = useSelector((state) => state.auth);
+  const { avatar, nickname, userId } = useSelector((state) => state.auth);
 
   const onAddevent = (event) => {
     event.preventDefault();
@@ -24,8 +24,9 @@ function AddForm() {
       avatar,
       writedTo: member,
       createdAt: new Date().toString, //직렬화가 되지 않았다는 오류가 뜨면 문자열로 바꿔준다.
+      userId,
     };
-    dispatch(createLetterThunk(nextLetter));
+    dispatch(__addLetter(nextLetter));
   };
 
   return (
